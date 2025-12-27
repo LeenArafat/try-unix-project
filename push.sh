@@ -1,0 +1,22 @@
+#!/bin/bash
+if [ ! -d ".git" ]
+then
+  echo "not a git file! "
+  exit 1
+fi
+branch=$(git status | grep "On branch" | awk '{print $3}')
+if [ "$branch" == "main" ]
+then
+  echo "please take in consederation that the current branch is main, push anyway? Y/N"
+  read confirm
+  if [ $confirm != 'Y' -a $confirm != 'y' ]
+  then
+  exit 1
+  fi
+fi
+echo "enter files you want to push"
+read files
+
+git add $files
+git commit -m "auto push"
+git push origin $branch
