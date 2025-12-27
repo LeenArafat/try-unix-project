@@ -1,8 +1,10 @@
 FROM ubuntu:22.04
-RUN apt update
-RUN apt install -y apache2 php libapache2-mod-php php-mysql \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+#this is to remove the interactive questions
+ENV DEBIAN_FRONTEND=noninteractive
+
+RUN apt update && \
+    apt install -y apache2 php libapache2-mod-php php-mysql && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Enable Apache mod_rewrite (useful for PHP)
 RUN a2enmod rewrite
